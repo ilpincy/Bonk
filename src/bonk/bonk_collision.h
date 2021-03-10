@@ -18,8 +18,8 @@ struct bonk_collision_bb_s {
 typedef struct bonk_collision_bb_s bonk_collision_bb_t;
 
 struct bonk_collision_data_s {
-   unsigned int n;      /* number of collision points, 0 => no collision */
-   bonk_vec2_t* points; /* collision points */
+   unsigned int n;        /* number of collision points, 0 => no collision */
+   bonk_vec2_t points[2]; /* collision points */
 };
 
 typedef struct bonk_collision_data_s bonk_collision_data_t;

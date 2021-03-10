@@ -50,6 +50,13 @@ extern void bonk_body_shape_remove(bonk_body_t b, struct bonk_shape_s* s);
 /****************************************/
 /****************************************/
 
+extern bonk_vec2_t bonk_world2local(bonk_body_t b, bonk_vec2_t v);
+
+extern bonk_vec2_t bonk_local2world(bonk_body_t b, bonk_vec2_t v);
+
+/****************************************/
+/****************************************/
+
 extern void bonk_body_print(bonk_body_t b);
 
 /****************************************/

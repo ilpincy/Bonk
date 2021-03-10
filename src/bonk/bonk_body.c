@@ -91,6 +91,24 @@ void bonk_body_shape_remove(bonk_body_t b, bonk_shape_t s) {
 /****************************************/
 /****************************************/
 
+bonk_vec2_t bonk_world2local(bonk_body_t b, bonk_vec2_t v) {
+   return bonk_vec2(
+       b->rv.x * (v.x - b->p.x) + b->rv.y * (v.y - b->p.y),
+      -b->rv.y * (v.x - b->p.x) + b->rv.x * (v.y - b->p.y));
+}
+
+/****************************************/
+/****************************************/
+
+bonk_vec2_t bonk_local2world(bonk_body_t b, bonk_vec2_t v) {
+   return bonk_vec2(
+      b->rv.x * v.x - b->rv.y * v.y + b->p.x,
+      b->rv.y * v.x + b->rv.x * v.y + b->p.y);
+}
+
+/****************************************/
+/****************************************/
+
 void bonk_body_print(bonk_body_t b) {
    printf("body p=<%f,%f>, v=<%f,%f>, f=<%f,%f>, r=%f, a=%f, t=%f\n",
           b->p.x, b->p.y,
