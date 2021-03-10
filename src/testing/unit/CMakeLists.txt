@@ -1,0 +1,5 @@
+add_executable(bonk_empty_test bonk_empty_test.c)
+target_link_libraries(bonk_empty_test bonk)
+
+add_executable(bonk_collide_test bonk_collide_test.c)
+target_link_libraries(bonk_collide_test bonk)
