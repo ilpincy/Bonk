@@ -126,12 +126,9 @@ static bonk_collide_shape_f bonk_collide_dispatch[] = {
 int bonk_collide_shapes(bonk_collision_data_t* data,
                         bonk_shape_t s1,
                         bonk_shape_t s2) {
-   if(s1->type > s2->type) {
-      bonk_shape_t tmp = s1;
-      s1 = s2;
-      s2 = tmp;
-   }
-   bonk_collide_dispatch[s1->type | s2->type](data, s1, s2);
+   bonk_shape_t minshape = s1->type < s2->type ? s1 : s2;
+   bonk_shape_t maxshape = s1->type > s2->type ? s1 : s2;
+   bonk_collide_dispatch[maxshape->type | minshape->type](data, minshape, maxshape);
    return data->n > 0;
 }
 
