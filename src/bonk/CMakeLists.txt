@@ -1,17 +1,17 @@
-set(BONK_INCLUDES
-  bonk_body.h
-  bonk_collision.h
-  bonk_engine.h
-  bonk_shape.h
-  bonk_vec2.h)
+set(BNK_INCLUDES
+  bnk_body.h
+  bnk_collision.h
+  bnk_engine.h
+  bnk_shape.h
+  bnk_vec2.h)
 
-set(BONK_SOURCES
-  bonk_body.c
-  bonk_collision.c
-  bonk_engine.c
-  bonk_shape.c
-  bonk_vec2.c)
+set(BNK_SOURCES
+  bnk_body.c
+  bnk_collision.c
+  bnk_engine.c
+  bnk_shape.c
+  bnk_vec2.c)
 
 add_library(bonk
-  ${BONK_INCLUDES}
-  ${BONK_SOURCES})
+  ${BNK_INCLUDES}
+  ${BNK_SOURCES})

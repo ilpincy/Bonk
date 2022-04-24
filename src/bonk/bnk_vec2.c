@@ -1,18 +1,18 @@
-#include "bonk_vec2.h"
+#include "bnk_vec2.h"
 
 #include <math.h>
 
 /****************************************/
 /****************************************/
 
-bonk_vec2_t bonk_vec2(double x, double y) {
-   return (bonk_vec2_t){x, y};
+bnkVec2T bnkVec2(double x, double y) {
+   return (bnkVec2T){x, y};
 }
 
 /****************************************/
 /****************************************/
 
-void bonk_vec2_copy(bonk_vec2_t* v1, bonk_vec2_t v2) {
+void bnkVec2Copy(bnkVec2T* v1, bnkVec2T v2) {
    v1->x = v2.x;
    v1->y = v2.y;
 }
@@ -20,50 +20,50 @@ void bonk_vec2_copy(bonk_vec2_t* v1, bonk_vec2_t v2) {
 /****************************************/
 /****************************************/
 
-double bonk_vec2_length(bonk_vec2_t v) {
+double bnkVec2Length(bnkVec2T v) {
    return sqrt(v.x * v.x + v.y * v.y);
 }
 
 /****************************************/
 /****************************************/
 
-bonk_vec2_t bonk_vec2_perp(bonk_vec2_t v) {
-   return (bonk_vec2_t){-v.y, v.x};
+bnkVec2T bnkVec2Perp(bnkVec2T v) {
+   return (bnkVec2T){-v.y, v.x};
 }
 
 /****************************************/
 /****************************************/
 
-bonk_vec2_t bonk_vec2_add(bonk_vec2_t v1, bonk_vec2_t v2) {
-   return (bonk_vec2_t){v1.x + v2.x, v1.y + v2.y};
+bnkVec2T bnkVec2Add(bnkVec2T v1, bnkVec2T v2) {
+   return (bnkVec2T){v1.x + v2.x, v1.y + v2.y};
 }
 
 /****************************************/
 /****************************************/
 
-bonk_vec2_t bonk_vec2_sub(bonk_vec2_t v1, bonk_vec2_t v2) {
-   return (bonk_vec2_t){v1.x - v2.x, v1.y - v2.y};
+bnkVec2T bnkVec2Sub(bnkVec2T v1, bnkVec2T v2) {
+   return (bnkVec2T){v1.x - v2.x, v1.y - v2.y};
 }
 
 /****************************************/
 /****************************************/
 
-double bonk_vec2_dot(bonk_vec2_t v1, bonk_vec2_t v2) {
+double bnkVec2Dot(bnkVec2T v1, bnkVec2T v2) {
    return v1.x * v2.x + v1.y * v2.y;
 }
 
 /****************************************/
 /****************************************/
 
-bonk_vec2_t bonk_vec2_scale(bonk_vec2_t v, double f) {
-   return (bonk_vec2_t){v.x * f, v.y * f};
+bnkVec2T bnkVec2Scale(bnkVec2T v, double f) {
+   return (bnkVec2T){v.x * f, v.y * f};
 }
 
 /****************************************/
 /****************************************/
 
-double bonk_vec2_distance(bonk_vec2_t v1, bonk_vec2_t v2) {
-   return bonk_vec2_length(bonk_vec2_sub(v1, v2));
+double bnkVec2Distance(bnkVec2T v1, bnkVec2T v2) {
+   return bnkVec2Length(bnkVec2Sub(v1, v2));
 }
 
 /****************************************/

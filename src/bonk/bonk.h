@@ -1,12 +1,12 @@
-#ifndef BONK_H
-#define BONK_H
+#ifndef BNK_H
+#define BNK_H
 
-struct bonk_engine_s;
-struct bonk_body_s;
-struct bonk_shape_s;
+struct bnkEngineS;
+struct bnkBodyS;
+struct bnkShapeS;
 
-#include <bonk/bonk_engine.h>
-#include <bonk/bonk_body.h>
-#include <bonk/bonk_shape.h>
+#include <bonk/bnk_engine.h>
+#include <bonk/bnk_body.h>
+#include <bonk/bnk_shape.h>
 
 #endif
