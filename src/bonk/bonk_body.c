@@ -28,7 +28,7 @@ void bonk_body_delete(bonk_body_t* b) {
 void bonk_body_step(bonk_body_t b, double dt) {
    /* Linear position and velocity */
    b->p = bonk_vec2_scale(bonk_vec2_add(b->p, b->v), dt);
-   b->v = bonk_vec2_scale(bonk_vec2_add(b->v, bonk_vec2_scale(b->f, b->m)), dt);
+   b->v = bonk_vec2_scale(bonk_vec2_add(b->v, bonk_vec2_scale(b->f, 1.0 / b->m)), dt);
    /* Rotation */
    b->rs += b->a / b->i * dt;
    b->rv = bonk_vec2(cos(b->rs), sin(b->rs));
