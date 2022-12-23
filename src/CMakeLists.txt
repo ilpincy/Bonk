@@ -19,5 +19,8 @@ set_property(GLOBAL PROPERTY C_STANDARD_REQUIRED ON)
 
 include_directories(${CMAKE_SOURCE_DIR})
 
+# find_path(AVX_INCLUDE_DIR immintrin.h)
+# include_directories(${AVX_INCLUDE_DIR})
+
 add_subdirectory(bonk)
 add_subdirectory(testing)

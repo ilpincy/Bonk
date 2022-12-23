@@ -1,18 +1,18 @@
-#include "bonk_vec2.h"
+#include "bkVec2.h"
 
 #include <math.h>
 
 /****************************************/
 /****************************************/
 
-bonk_vec2_t bonk_vec2(double x, double y) {
-   return (bonk_vec2_t){x, y};
+bkVec2T bkVec2(double x, double y) {
+   return (bkVec2T){x, y};
 }
 
 /****************************************/
 /****************************************/
 
-void bonk_vec2_copy(bonk_vec2_t* v1, bonk_vec2_t v2) {
+void bkVec2Copy(bkVec2T* v1, bkVec2T v2) {
    v1->x = v2.x;
    v1->y = v2.y;
 }
@@ -20,50 +20,64 @@ void bonk_vec2_copy(bonk_vec2_t* v1, bonk_vec2_t v2) {
 /****************************************/
 /****************************************/
 
-double bonk_vec2_length(bonk_vec2_t v) {
+double bkVec2SqLength(bkVec2T v) {
+   return v.x * v.x + v.y * v.y;
+}
+
+/****************************************/
+/****************************************/
+
+double bkVec2Length(bkVec2T v) {
    return sqrt(v.x * v.x + v.y * v.y);
 }
 
 /****************************************/
 /****************************************/
 
-bonk_vec2_t bonk_vec2_perp(bonk_vec2_t v) {
-   return (bonk_vec2_t){-v.y, v.x};
+bkVec2T bkVec2Perp(bkVec2T v) {
+   return (bkVec2T){-v.y, v.x};
 }
 
 /****************************************/
 /****************************************/
 
-bonk_vec2_t bonk_vec2_add(bonk_vec2_t v1, bonk_vec2_t v2) {
-   return (bonk_vec2_t){v1.x + v2.x, v1.y + v2.y};
+bkVec2T bkVec2Add(bkVec2T v1, bkVec2T v2) {
+   return (bkVec2T){v1.x + v2.x, v1.y + v2.y};
 }
 
 /****************************************/
 /****************************************/
 
-bonk_vec2_t bonk_vec2_sub(bonk_vec2_t v1, bonk_vec2_t v2) {
-   return (bonk_vec2_t){v1.x - v2.x, v1.y - v2.y};
+bkVec2T bkVec2Sub(bkVec2T v1, bkVec2T v2) {
+   return (bkVec2T){v1.x - v2.x, v1.y - v2.y};
 }
 
 /****************************************/
 /****************************************/
 
-double bonk_vec2_dot(bonk_vec2_t v1, bonk_vec2_t v2) {
+double bkVec2Dot(bkVec2T v1, bkVec2T v2) {
    return v1.x * v2.x + v1.y * v2.y;
 }
 
 /****************************************/
 /****************************************/
 
-bonk_vec2_t bonk_vec2_scale(bonk_vec2_t v, double f) {
-   return (bonk_vec2_t){v.x * f, v.y * f};
+double bkVec2Cross(bkVec2T v1, bkVec2T v2) {
+   return v1.x * v2.y - v1.y * v2.x;
 }
 
 /****************************************/
 /****************************************/
 
-double bonk_vec2_distance(bonk_vec2_t v1, bonk_vec2_t v2) {
-   return bonk_vec2_length(bonk_vec2_sub(v1, v2));
+bkVec2T bkVec2Scale(bkVec2T v, double f) {
+   return (bkVec2T){v.x * f, v.y * f};
+}
+
+/****************************************/
+/****************************************/
+
+double bkVec2Distance(bkVec2T v1, bkVec2T v2) {
+   return bkVec2Length(bkVec2Sub(v1, v2));
 }
 
 /****************************************/

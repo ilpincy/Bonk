@@ -1,42 +1,42 @@
-#include <bonk/bonk_shape.h>
-#include <bonk/bonk_collision.h>
+#include <bonk/bkShape.h>
+#include <bonk/bkCollision.h>
 #include <stdio.h>
 
 int main() {
-   bonk_shape_circle_t c = bonk_shape_circle_new(
-      (bonk_vec2_t){0.0, 0.0},
+   bkShapeCircleT c = bkShapeCircleNew(
+      (bkVec2T){0.0, 0.0},
       0.0,
       1.0);
-   bonk_vec2_t v[] = {
-      (bonk_vec2_t){0.0, 0.0},
-      (bonk_vec2_t){1.0, 0.0},
-      (bonk_vec2_t){0.0, 1.0}
+   bkVec2T v[] = {
+      (bkVec2T){0.0, 0.0},
+      (bkVec2T){1.0, 0.0},
+      (bkVec2T){0.0, 1.0}
    };
-   bonk_shape_polygon_t p = bonk_shape_polygon_new(
-      (bonk_vec2_t){0.0, 0.0},
+   bkShapePolygonT p = bkShapePolygonNew(
+      (bkVec2T){0.0, 0.0},
       0.0,
       3,
       v);
-   bonk_shape_segment_t s = bonk_shape_segment_new(
-      (bonk_vec2_t){0.0, 0.0},
+   bkShapeSegmentT s = bkShapeSegmentNew(
+      (bkVec2T){0.0, 0.0},
       0.0,
-      (bonk_vec2_t){0.0, 0.0},
-      (bonk_vec2_t){1.0, 0.0});
+      (bkVec2T){0.0, 0.0},
+      (bkVec2T){1.0, 0.0});
 
-   bonk_collision_data_t data;
-   bonk_collide_shapes(&data, (bonk_shape_t)c, (bonk_shape_t)c);
-   bonk_collide_shapes(&data, (bonk_shape_t)p, (bonk_shape_t)p);
-   bonk_collide_shapes(&data, (bonk_shape_t)c, (bonk_shape_t)p);
-   bonk_collide_shapes(&data, (bonk_shape_t)p, (bonk_shape_t)c);
-   bonk_collide_shapes(&data, (bonk_shape_t)s, (bonk_shape_t)s);
-   bonk_collide_shapes(&data, (bonk_shape_t)s, (bonk_shape_t)c);
-   bonk_collide_shapes(&data, (bonk_shape_t)c, (bonk_shape_t)s);
-   bonk_collide_shapes(&data, (bonk_shape_t)s, (bonk_shape_t)p);
-   bonk_collide_shapes(&data, (bonk_shape_t)p, (bonk_shape_t)s);
+   bkCollisionDataT data;
+   bkCollideShapes(&data, (bkShapeT)c, (bkShapeT)c);
+   bkCollideShapes(&data, (bkShapeT)p, (bkShapeT)p);
+   bkCollideShapes(&data, (bkShapeT)c, (bkShapeT)p);
+   bkCollideShapes(&data, (bkShapeT)p, (bkShapeT)c);
+   bkCollideShapes(&data, (bkShapeT)s, (bkShapeT)s);
+   bkCollideShapes(&data, (bkShapeT)s, (bkShapeT)c);
+   bkCollideShapes(&data, (bkShapeT)c, (bkShapeT)s);
+   bkCollideShapes(&data, (bkShapeT)s, (bkShapeT)p);
+   bkCollideShapes(&data, (bkShapeT)p, (bkShapeT)s);
    
-   bonk_shape_delete((bonk_shape_t*)&c);
-   bonk_shape_delete((bonk_shape_t*)&p);
-   bonk_shape_delete((bonk_shape_t*)&s);
+   bkShapeDelete((bkShapeT*)&c);
+   bkShapeDelete((bkShapeT*)&p);
+   bkShapeDelete((bkShapeT*)&s);
    
    return 0;
 }

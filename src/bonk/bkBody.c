@@ -1,5 +1,5 @@
-#include "bonk_body.h"
-#include "bonk_shape.h"
+#include "bkBody.h"
+#include "bkShape.h"
 
 #include <stdlib.h>
 #include <math.h>
@@ -9,15 +9,15 @@
 /****************************************/
 /****************************************/
 
-bonk_body_t bonk_body_new() {
-   return calloc(1, sizeof(struct bonk_body_s));
+bkBodyT bkBodyNew() {
+   return calloc(1, sizeof(struct bkBodyS));
 }
 
 /****************************************/
 /****************************************/
 
-void bonk_body_delete(bonk_body_t* b) {
-   bonk_body_t next = (*b)->next;
+void bkBodyDelete(bkBodyT* b) {
+   bkBodyT next = (*b)->next;
    free(*b);
    *b = next;
 }
@@ -25,55 +25,58 @@ void bonk_body_delete(bonk_body_t* b) {
 /****************************************/
 /****************************************/
 
-void bonk_body_step(bonk_body_t b, double dt) {
+void bkBodyStep(bkBodyT b, double dt) {
    /* Linear position and velocity */
-   b->p = bonk_vec2_scale(bonk_vec2_add(b->p, b->v), dt);
-   b->v = bonk_vec2_scale(bonk_vec2_add(b->v, bonk_vec2_scale(b->f, b->m)), dt);
+   b->p = bkVec2Scale(bkVec2Add(b->p, b->v), dt);
+   b->v = bkVec2Scale(bkVec2Add(b->v, bkVec2Scale(b->f, b->m)), dt);
    /* Rotation */
    b->rs += b->a / b->i * dt;
-   b->rv = bonk_vec2(cos(b->rs), sin(b->rs));
+   b->rv = bkVec2(cos(b->rs), sin(b->rs));
    b->a += b->t * dt;
+   /* Update shapes */
+   for(bkShapeT s = b->shapes; s != 0; s = s->next)
+      s->update(s);
 }
 
 /****************************************/
 /****************************************/
 
-void bonk_body_reset(bonk_body_t b) {
-   b->f = bonk_vec2_zero;
+void bkBodyReset(bkBodyT b) {
+   b->f = bkVec2Zero;
 }
 
 /****************************************/
 /****************************************/
 
-void bonk_body_force_set(bonk_body_t b, bonk_vec2_t f) {
+void bkBodyForceSet(bkBodyT b, bkVec2T f) {
    b->f = f;
 }
 
 /****************************************/
 /****************************************/
 
-void bonk_body_torque_set(bonk_body_t b, double t) {
+void bkBodyTorqueSet(bkBodyT b, double t) {
    b->t = t;
 }
 
 /****************************************/
 /****************************************/
 
-void bonk_body_force_add(bonk_body_t b, bonk_vec2_t f) {
-   b->f = bonk_vec2_add(b->f, f);
+void bkBodyForceAdd(bkBodyT b, bkVec2T f) {
+   b->f = bkVec2Add(b->f, f);
 }
 
 /****************************************/
 /****************************************/
 
-void bonk_body_torque_add(bonk_body_t b, double t) {
+void bkBodyTorqueAdd(bkBodyT b, double t) {
    b->t += t;
 }
 
 /****************************************/
 /****************************************/
 
-void bonk_body_shape_add(bonk_body_t b, bonk_shape_t s) {
+void bkBodyShapeAdd(bkBodyT b, bkShapeT s) {
    s->body = b;
    s->next = b->shapes;
    b->shapes = s;
@@ -82,17 +85,17 @@ void bonk_body_shape_add(bonk_body_t b, bonk_shape_t s) {
 /****************************************/
 /****************************************/
 
-void bonk_body_shape_remove(bonk_body_t b, bonk_shape_t s) {
-   bonk_shape_t* cur = &(b->shapes);
+void bkBodyShapeRemove(bkBodyT b, bkShapeT s) {
+   bkShapeT* cur = &(b->shapes);
    while((*cur) && (*cur != s)) cur = &((*cur)->next);
-   bonk_shape_delete(cur);
+   bkShapeDelete(cur);
 }
 
 /****************************************/
 /****************************************/
 
-bonk_vec2_t bonk_world2local(bonk_body_t b, bonk_vec2_t v) {
-   return bonk_vec2(
+bkVec2T bkWorld2Local(bkBodyT b, bkVec2T v) {
+   return bkVec2(
        b->rv.x * (v.x - b->p.x) + b->rv.y * (v.y - b->p.y),
       -b->rv.y * (v.x - b->p.x) + b->rv.x * (v.y - b->p.y));
 }
@@ -100,8 +103,8 @@ bonk_vec2_t bonk_world2local(bonk_body_t b, bonk_vec2_t v) {
 /****************************************/
 /****************************************/
 
-bonk_vec2_t bonk_local2world(bonk_body_t b, bonk_vec2_t v) {
-   return bonk_vec2(
+bkVec2T bkLocal2World(bkBodyT b, bkVec2T v) {
+   return bkVec2(
       b->rv.x * v.x - b->rv.y * v.y + b->p.x,
       b->rv.y * v.x + b->rv.x * v.y + b->p.y);
 }
@@ -109,7 +112,7 @@ bonk_vec2_t bonk_local2world(bonk_body_t b, bonk_vec2_t v) {
 /****************************************/
 /****************************************/
 
-void bonk_body_print(bonk_body_t b) {
+void bkBodyPrint(bkBodyT b) {
    printf("body p=<%f,%f>, v=<%f,%f>, f=<%f,%f>, r=%f, a=%f, t=%f\n",
           b->p.x, b->p.y,
           b->v.x, b->v.y,
@@ -117,8 +120,8 @@ void bonk_body_print(bonk_body_t b) {
           b->rs,
           b->a,
           b->t);
-   for(bonk_shape_t s = b->shapes; s; s = s->next)
-      bonk_shape_print(s);
+   for(bkShapeT s = b->shapes; s; s = s->next)
+      bkShapePrint(s);
    printf("\n");
 }
 
