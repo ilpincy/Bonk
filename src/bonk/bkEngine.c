@@ -34,6 +34,7 @@ void bkEngineStep(bkEngineT e, double dt) {
       bkBodyReset(b);
    }
    /* Detect collisions */
+   // TODO: improve the tiem complexity of this with a suitable data structure
    bkCollisionDataT collision;
    for(bkBodyT b1 = e->bodies; b1; b1 = b1->next) {
       for(bkBodyT b2 = b1->next; b2; b2 = b2->next) {
@@ -46,6 +47,7 @@ void bkEngineStep(bkEngineT e, double dt) {
       }
    }
    /* Solve collisions */
+   // TODO
 }
 
 /****************************************/

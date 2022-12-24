@@ -3,25 +3,15 @@
 #include <stdio.h>
 
 int main() {
-   bkShapeCircleT c = bkShapeCircleNew(
-      (bkVec2T){0.0, 0.0},
-      0.0,
-      1.0);
+   bkShapeCircleT c = bkShapeCircleNew(1.0);
    bkVec2T v[] = {
       (bkVec2T){0.0, 0.0},
       (bkVec2T){1.0, 0.0},
       (bkVec2T){0.0, 1.0}
    };
-   bkShapePolygonT p = bkShapePolygonNew(
-      (bkVec2T){0.0, 0.0},
-      0.0,
-      3,
-      v);
-   bkShapeSegmentT s = bkShapeSegmentNew(
-      (bkVec2T){0.0, 0.0},
-      0.0,
-      (bkVec2T){0.0, 0.0},
-      (bkVec2T){1.0, 0.0});
+   bkShapePolygonT p = bkShapePolygonNew(3, v);
+   bkShapeSegmentT s = bkShapeSegmentNew((bkVec2T){0.0, 0.0},
+                                         (bkVec2T){1.0, 0.0});
 
    bkCollisionDataT data;
    bkCollideShapes(&data, (bkShapeT)c, (bkShapeT)c);

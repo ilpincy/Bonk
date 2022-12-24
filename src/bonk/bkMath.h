@@ -3,8 +3,8 @@
 
 #include <math.h>
 
-#define bonk_max(x,y) ((x) > (y) ? (x) : (y))
+#define bkMax(x,y) ((x) > (y) ? (x) : (y))
 
-#define bonk_min(x,y) ((x) < (y) ? (x) : (y))
+#define bkMin(x,y) ((x) < (y) ? (x) : (y))
 
 #endif

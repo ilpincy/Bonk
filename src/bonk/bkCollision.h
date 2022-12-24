@@ -9,17 +9,18 @@
 struct bkShapeS;
 
 struct bkCollisionBBS {
-   bkVec2T bl; /* bottom-left */
-   bkVec2T br; /* bottom-right */
-   bkVec2T tl; /* top-left */
-   bkVec2T tr; /* top-right */
+   double top;
+   double bottom;
+   double right;
+   double left;
 };
 
 typedef struct bkCollisionBBS bkCollisionBBT;
 
 struct bkCollisionDataS {
-   unsigned int n;        /* number of collision points, 0 => no collision */
-   bkVec2T points[2]; /* collision points */
+   unsigned int n;     /* number of collision points, 0 => no collision */
+   bkVec2T points[2];  /* collision points */
+   bkVec2T normals[2]; /* normals at collision points */
 };
 
 typedef struct bkCollisionDataS bkCollisionDataT;

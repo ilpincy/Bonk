@@ -26,16 +26,22 @@ void bkBodyDelete(bkBodyT* b) {
 /****************************************/
 
 void bkBodyStep(bkBodyT b, double dt) {
+   /*
+    * Here we use a symplectic integrator
+    * See https://en.wikipedia.org/wiki/Symplectic_integrator
+    */
    /* Linear position and velocity */
-   b->p = bkVec2Scale(bkVec2Add(b->p, b->v), dt);
-   b->v = bkVec2Scale(bkVec2Add(b->v, bkVec2Scale(b->f, b->m)), dt);
+   b->v = bkVec2Add(b->v, bkVec2Scale(b->f, dt / b->m));
+   b->p = bkVec2Add(b->p, bkVec2Scale(b->v, dt));
    /* Rotation */
-   b->rs += b->a / b->i * dt;
+   b->w += b->t / b->i * dt;
+   b->rs += b->w * dt;
    b->rv = bkVec2(cos(b->rs), sin(b->rs));
-   b->a += b->t * dt;
    /* Update shapes */
-   for(bkShapeT s = b->shapes; s != 0; s = s->next)
-      s->update(s);
+   for(bkShapeT s = b->shapes; s != 0; s = s->next) {
+      s->pose_update(s);
+      s->bb_update(s);
+   }
 }
 
 /****************************************/
@@ -43,6 +49,7 @@ void bkBodyStep(bkBodyT b, double dt) {
 
 void bkBodyReset(bkBodyT b) {
    b->f = bkVec2Zero;
+   b->t = 0.0;
 }
 
 /****************************************/
@@ -76,10 +83,13 @@ void bkBodyTorqueAdd(bkBodyT b, double t) {
 /****************************************/
 /****************************************/
 
-void bkBodyShapeAdd(bkBodyT b, bkShapeT s) {
+void bkBodyShapeAdd(bkBodyT b, bkShapeT s,
+                    bkVec2T p_off, bkVec2T a_off) {
    s->body = b;
    s->next = b->shapes;
    b->shapes = s;
+   s->p_off = p_off;
+   s->a_off = a_off;
 }
 
 /****************************************/
@@ -113,12 +123,12 @@ bkVec2T bkLocal2World(bkBodyT b, bkVec2T v) {
 /****************************************/
 
 void bkBodyPrint(bkBodyT b) {
-   printf("body p=<%f,%f>, v=<%f,%f>, f=<%f,%f>, r=%f, a=%f, t=%f\n",
+   printf("body p=<%f,%f>, v=<%f,%f>, f=<%f,%f>, r=%f, w=%f, t=%f\n",
           b->p.x, b->p.y,
           b->v.x, b->v.y,
           b->f.x, b->f.y,
           b->rs,
-          b->a,
+          b->w,
           b->t);
    for(bkShapeT s = b->shapes; s; s = s->next)
       bkShapePrint(s);

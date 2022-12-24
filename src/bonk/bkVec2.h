@@ -38,6 +38,8 @@ extern bkVec2T bkVec2Scale(bkVec2T v, double f);
 
 extern double bkVec2Distance(bkVec2T v1, bkVec2T v2);
 
+extern bkVec2T bkVec2Rotate(bkVec2T v, bkVec2T r);
+
 /****************************************/
 /****************************************/
 
