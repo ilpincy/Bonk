@@ -25,6 +25,7 @@ int OnStep(bkVizT v) {
    /* bkVizDrawPoint(v, p1); */
    /* bkVizDrawPoint(v, p2); */
    bkVizSetLineColor(v, 255, 0, 0, 255);
+   bkVizSetLineThickness(v, 3.0);
    bkVizSetFillColor(v, 255, 255, 255, 255);
    bkVec2T c = bkVec2(240.0, 240.0);
    bkVizDrawCircle(v, c, 100, 1);

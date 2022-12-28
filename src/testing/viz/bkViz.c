@@ -1,4 +1,7 @@
 #include "bkViz.h"
+
+#include <bonk/bkMath.h>
+
 #include <stdlib.h>
 #include <time.h>
 
@@ -142,8 +145,13 @@ void bkVizDrawPoint(bkVizT v,
                           v->line_color.g,
                           v->line_color.b,
                           v->line_color.a);
+   SDL_RenderSetScale(v->SDL.renderer,
+                      v->line_thickness,
+                      v->line_thickness);
    SDL_RenderDrawPointF(v->SDL.renderer,
-                        p.x, p.y);
+                        p.x / v->line_thickness,
+                        p.y / v->line_thickness);
+   SDL_RenderSetScale(v->SDL.renderer, 1.0, 1.0);
 }
 
 /****************************************/
@@ -157,9 +165,15 @@ void bkVizDrawLine(bkVizT v,
                           v->line_color.g,
                           v->line_color.b,
                           v->line_color.a);
+   SDL_RenderSetScale(v->SDL.renderer,
+                      v->line_thickness,
+                      v->line_thickness);
    SDL_RenderDrawLineF(v->SDL.renderer,
-                       p1.x, p1.y,
-                       p2.x, p2.y);
+                       p1.x / v->line_thickness,
+                       p1.y / v->line_thickness,
+                       p2.x / v->line_thickness,
+                       p2.y / v->line_thickness);
+   SDL_RenderSetScale(v->SDL.renderer, 1.0, 1.0);
 }
 
 /****************************************/
@@ -219,14 +233,18 @@ void bkVizDrawPolygon(bkVizT v,
                           v->line_color.g,
                           v->line_color.b,
                           v->line_color.a);
+   SDL_RenderSetScale(v->SDL.renderer,
+                      v->line_thickness,
+                      v->line_thickness);
    SDL_FPoint* sdl_vs = malloc((n+1) * sizeof(SDL_FPoint));
    for(unsigned int i = 0; i < n; ++i) {
-      sdl_vs[i].x = vs[i].x;
-      sdl_vs[i].y = vs[i].y;
+      sdl_vs[i].x = vs[i].x / v->line_thickness;
+      sdl_vs[i].y = vs[i].y / v->line_thickness;
    }
-   sdl_vs[n].x = vs[0].x;
-   sdl_vs[n].y = vs[0].y;
+   sdl_vs[n].x = vs[0].x / v->line_thickness;
+   sdl_vs[n].y = vs[0].y / v->line_thickness;
    SDL_RenderDrawLinesF(v->SDL.renderer, sdl_vs, n+1);
+   SDL_RenderSetScale(v->SDL.renderer, 1.0, 1.0);
    free(sdl_vs);
 }
 
@@ -252,7 +270,7 @@ void bkVizDrawCircle(bkVizT v,
                      int filled) {
    static const unsigned int NVERTS = 36;
    bkVec2T* vs = malloc(NVERTS * sizeof(bkVec2T));
-   bkVec2T slice = bkVec2(cos(2 * 3.1415 / NVERTS), sin(2 * 3.1415 / NVERTS));
+   bkVec2T slice = bkVec2(cos(2 * bkPi / NVERTS), sin(2 * bkPi / NVERTS));
    vs[0] = bkVec2(r, 0.0);
    for(unsigned int i = 1; i < NVERTS; ++i) {
       vs[i] = bkVec2Rotate(vs[i-1], slice);
