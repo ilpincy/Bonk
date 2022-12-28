@@ -84,7 +84,9 @@ double bkVec2Distance(bkVec2T v1, bkVec2T v2) {
 /****************************************/
 
 bkVec2T bkVec2Rotate(bkVec2T v, bkVec2T r) {
-   return (bkVec2T){v.x * r.x, v.y * r.y};
+   return (bkVec2T){
+      v.x * r.x + v.y * r.y,
+      v.y * r.x - v.x * r.y};
 }
 
 /****************************************/

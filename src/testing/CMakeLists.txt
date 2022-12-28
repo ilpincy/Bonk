@@ -1,2 +1,2 @@
 add_subdirectory(unit)
-#add_subdirectory(viz)
+add_subdirectory(viz)
